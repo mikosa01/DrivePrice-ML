@@ -15,7 +15,6 @@ def save_pipeline(*, pipeline_persit:object) -> None:
     pipeline_name  = f'{config.PIPELINE_NAME}.pkl'
     pipe_dir = Path(config.TRAINED_MODEL_DIRECTORY)
     pipeline_directory = pipe_dir/pipeline_name
-
     joblib.dump(pipeline_persit, pipeline_directory)
 
 
