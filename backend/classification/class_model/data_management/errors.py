@@ -10,3 +10,7 @@ class CustomInvalidModelInput(BaseError):
 class CustomValueError(BaseError):
     """Custom Value Error Input"""
     pass
+
+class CustomFileNotFoundError(BaseError):
+    """Custom File Not Found Error"""
+    pass

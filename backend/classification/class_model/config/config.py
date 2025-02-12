@@ -116,3 +116,4 @@ TARGET_COLUMNS = 'Price'
 
 # model
 MODEL_NAME = 'linear_regression'
+PIPELINE_NAME = f'{MODEL_NAME}_output'
