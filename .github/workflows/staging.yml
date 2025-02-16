@@ -18,20 +18,15 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Debug file structure
-        run: pwd && ls -la
+        run: pwd && ls -R  # Show full directory structure
 
-      # Install dependencies from the requirements.txt for model training and testing
       - name: Install dependencies for model training and testing
-        run: pip install -r requirements.txt
+        run: pip install -r backend/requirements.txt  # Adjust the path as needed
 
-
-      # Run pytest for the test cases
       - name: Run pytest for tests
-        working-directory: backend
-        run: |
-          pytest /classification/test/
+        working-directory: backend/classification
+        run: pytest test/
