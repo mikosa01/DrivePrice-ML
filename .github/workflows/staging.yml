@@ -27,19 +27,19 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Debug file structure
-        run: |
-          pwd
-          ls -R
-          if [ -f backend/classification/class_model/requirements.txt ]; then
-            echo "✅ requirements.txt found!"
-          else
-            echo "❌ ERROR: requirements.txt not found!"
-            exit 1
-          fi
+      # - name: Debug file structure
+      #   run: |
+      #     pwd
+      #     ls -R
+      #     if [ -f backend/classification/class_model/requirements.txt ]; then
+      #       echo "✅ requirements.txt found!"
+      #     else
+      #       echo "❌ ERROR: requirements.txt not found!"
+      #       exit 1
+      #     fi
 
       - name: Install dependencies for model training and testing
-        run: pip install -r requirements.txt
+        run: pip install -r ./backend/classification/class_model/requirements.txt
 
       - name: Run pytest for tests
         working-directory: backend/classification
