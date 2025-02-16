@@ -1,4 +1,4 @@
-import errors
+from classification.class_model.data_management import errors
 import typing as t 
 import pandas as pd
 import numpy as np 
@@ -6,20 +6,21 @@ from datetime import datetime
 from sklearn.base import TransformerMixin, BaseEstimator
 
 class LabelEncoder(BaseEstimator, TransformerMixin):
-    def __init__(self, variables=None, label_encoder=None):
+    def __init__(self, variables=None):
         """Initialize with variables to be label-encoder encoded."""
         if not isinstance(variables, list):
             self.variables = [variables]
         else: 
             self.variables = variables
-       
-        if isinstance(label_encoder, dict):
-            self.label_encoder = label_encoder
-        else: 
-            raise errors.CustomValueError('Invalid dictionary: "{label_encoder}" must be dictionary')
     
     def fit(self, X:pd.DataFrame, y:pd.Series=None) -> 'LabelEncoder':
-        """Fit method (no-op for LabelEncoder)"""
+        self.encoder= {}
+        temp = pd.concat([X,y], axis = 1)
+        temp.columns= list(X.columns) + ["target"]
+        for col in self.variables:
+            label_encoder = temp.groupby([col])['target'].mean().sort_values(ascending=True).index
+            self.encoder[col] = {k:i for i, k in enumerate(label_encoder, 0)}
+
         return self 
     
     def transform(self, X:pd.DataFrame):
@@ -28,7 +29,18 @@ class LabelEncoder(BaseEstimator, TransformerMixin):
         for feature in self.variables:
             if feature not in X.columns:
                 raise errors.CustomValueError(f"Feature '{feature}' not found in the input data.")
-            X[feature] = X[feature].map(self.label_encoder)
+            X[feature] = X[feature].map(self.encoder[feature])
+
+                # check if transformer introduces NaN
+        if X[self.variables].isnull().any().any():
+            null_counts = X[self.variables].isnull().any()
+            vars_ = {
+                key: value for (key, value) in null_counts.items() if value is True
+            }
+            raise errors.CustomInvalidModelInput(
+                f"Categorical encoder has introduced NaN when "
+                f"transforming categorical variables: {vars_.keys()}"
+            )
         return X
     
     def fit_transform(self, X:pd.DataFrame, y:pd.Series= None) -> pd.DataFrame:
@@ -73,6 +85,7 @@ class AgeCalculator(BaseEstimator, TransformerMixin):
         - variable (str or list): Column(s) containing birth year.
         - colName (str): Name of the new column to store calculated age.
         """
+        self.current_year = datetime.now().year
         self.colName = colName
         if isinstance (varaible, list):
             self.varaible = varaible
@@ -80,8 +93,7 @@ class AgeCalculator(BaseEstimator, TransformerMixin):
             self.varaible = [varaible]
 
     def fit (self, X:pd.DataFrame, y:pd.Series=None):
-        """Stores the current year for age calculation."""
-        self.current_year = datetime.now().year
+
         return self
     
     def transform(self, X:pd.DataFrame):

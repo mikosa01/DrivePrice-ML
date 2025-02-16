@@ -1,4 +1,4 @@
-from class_model.config import config
+from classification.class_model.config import config
 import pandas as pd 
 
 def validation_input(input_data:pd.DataFrame) -> pd.DataFrame:

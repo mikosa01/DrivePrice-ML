@@ -12,3 +12,5 @@ python-dotenv==1.0.1
 nannyml==0.13.0 
 scipy==1.15.1
 nbformat>=4.2.0
+
+azure-storage-blob=<12.24.1

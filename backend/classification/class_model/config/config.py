@@ -1,8 +1,9 @@
 from pathlib import Path
+from classification import class_model
 
 
 # directory
-PACKAGE_ROOT = Path.cwd().parent
+PACKAGE_ROOT = Path(class_model.__file__).parent
 DATA_DIRECTORY = PACKAGE_ROOT/'data'
 TRAINED_MODEL_DIRECTORY = PACKAGE_ROOT/'trained_model'
 
@@ -53,15 +54,23 @@ CURRENT_YEAR_COLUMNN = 'current_year'
 AGE_COLUMN = 'Age'
 
 LABEL_ENCODER_COLUMNS = [
-                            'Transmission'
-                       ]
-TRANSMISSION_ENCODING = {'Manual':0, 'Semi-Automatic':1, 'Automatic':2}
-
-ONE_HOT_ENCODER_COLUMNS = [
+                            'Transmission',
                             'Brand', 
                             'Model', 
                             'Fuel_Type'
-                           ]
+                       ]
+
+FEATS_COLUMNS = [
+            'Brand', 
+            'Model', 
+            'Year', 
+            'Engine_Size', 
+            'Fuel_Type', 
+            'Transmission',
+            'Mileage', 
+            'Doors', 
+            'Owner_Count'
+        ]
 
 FEATURE_COLUMNS = [ 'Year', 
                    'Engine_Size', 

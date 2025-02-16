@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/mikosa/DrivePrice-ML/backend/classification/mlruns/203442435561453809/0dee1f4a121d4d6ca976fad524ba5d5b/artifacts
+end_time: 1739426612471
+entry_point_name: ''
+experiment_id: '203442435561453809'
+lifecycle_stage: active
+run_id: 0dee1f4a121d4d6ca976fad524ba5d5b
+run_name: beautiful-mink-54
+run_uuid: 0dee1f4a121d4d6ca976fad524ba5d5b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1739426610442
+status: 3
+tags: []
+user_id: michaelokuns
