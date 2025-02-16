@@ -25,7 +25,7 @@ jobs:
         run: pwd && ls -R  # Show full directory structure
 
       - name: Install dependencies for model training and testing
-        run: pip install -r backend/requirements.txt  # Adjust the path as needed
+        run: pip install -r backend/classification/class_model/requirements.txt
 
       - name: Run pytest for tests
         working-directory: backend/classification
