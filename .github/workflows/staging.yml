@@ -24,7 +24,6 @@ jobs:
 
       # Install dependencies from the requirements.txt for model training and testing
       - name: Install dependencies for model training and testing
-        working-directory: backend/classification/class_model
         run: pip install -r requirements.txt
 
 
