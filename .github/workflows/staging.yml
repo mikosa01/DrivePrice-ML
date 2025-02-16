@@ -1,10 +1,8 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Staging Area
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "develop" branch
+  # Triggers the workflow on push or pull request events but only for the "staging" branch
   push:
     branches: [ "staging" ]
   pull_request:
@@ -15,21 +13,20 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  tests model training:
-    # The type of runner that the job will run on
+  tests_and_model_training:  # Fixed the job name to be valid
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      # Runs a single command using the runners shell
-      - name: Installing all dependencies for model training
+      # Install dependencies from the requirements.txt for model training and testing
+      - name: Install dependencies for model training and testing
         run: pip install -r backend/classification/class_model/requirements.txt
 
-      # Runs a set of commands using the runners shell
-      - name: Run pytest
+      # Run pytest for the test cases
+      - name: Run pytest for tests
         run: |
-          pytest backend/classification/test
+          pytest backend/classification/test/
