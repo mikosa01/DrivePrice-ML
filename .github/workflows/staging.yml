@@ -27,20 +27,26 @@ jobs:
         with:
           python-version: '3.10'
 
-      # - name: Debug file structure
-      #   run: |
-      #     pwd
-      #     ls -R
-      #     if [ -f backend/classification/class_model/requirements.txt ]; then
-      #       echo "✅ requirements.txt found!"
-      #     else
-      #       echo "❌ ERROR: requirements.txt not found!"
-      #       exit 1
-      #     fi
+      - name: Show Python version and path
+        run: |
+          python --version
+          which python
+          echo "PYTHON_PATH=$(which python)" >> $GITHUB_ENV  # Store in environment variable
+      
+      - name: Install essential dependencies
+        run: pip install --upgrade pip setuptools wheel
 
-      - name: Install dependencies for model training and testing
-        run: pip install -r ./backend/classification/class_model/requirements.txt
+      - name: Install dependencies
+        run: pip install -r backend/classification/requirements.txt
 
-      - name: Run pytest for tests
+      - name: Set PYTHONPATH and run tests
+        run: |
+          export PYTHONPATH=${GITHUB_WORKSPACE}/backend
+          echo "PYTHONPATH set to $PYTHONPATH"
+          pytest test/
         working-directory: backend/classification
-        run: pytest test/
+
+
+
+
+
