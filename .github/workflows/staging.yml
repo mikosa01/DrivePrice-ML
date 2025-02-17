@@ -45,7 +45,6 @@ jobs:
           echo "PYTHONPATH set to $PYTHONPATH"
           ls -R  # Debugging: Check if the classification module exists
           pytest test/
-        working-directory: backend/classification
 
 
 
