@@ -39,6 +39,7 @@ jobs:
       - name: Install dependencies
         run: pip install -r backend/classification/requirements.txt
 
-      - name: Run tests
-        run: pytest test/
+      - name: Run tests with importlib mode
+        run: pytest --import-mode=importlib test/
         working-directory: backend/classification
+
