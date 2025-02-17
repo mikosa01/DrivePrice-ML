@@ -39,7 +39,11 @@ jobs:
       - name: Install dependencies
         run: pip install -r backend/classification/requirements.txt
 
-      - name: Run tests with importlib mode
-        run: pytest --import-mode=importlib test/
+      - name: Run tests with PYTHONPATH
+        run: |
+          export PYTHONPATH=$PWD/backend
+          echo "PYTHONPATH set to $PYTHONPATH"
+          pytest test/
         working-directory: backend/classification
+
 
