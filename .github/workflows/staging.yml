@@ -41,10 +41,12 @@ jobs:
 
       - name: Set PYTHONPATH and run tests
         run: |
-          export PYTHONPATH=$PWD/backend
+          export PYTHONPATH=${GITHUB_WORKSPACE}/backend
           echo "PYTHONPATH set to $PYTHONPATH"
-          ls -R  # Debugging: Check if the classification module exists
+          ls -R  # Debugging: Check folder structure
           pytest test/
+        working-directory: backend/classification
+
 
 
 
