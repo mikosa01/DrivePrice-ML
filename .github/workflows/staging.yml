@@ -33,10 +33,6 @@ jobs:
       - name: Install dependencies
         run: pip install -r backend/classification/requirements.txt
 
-      - name: Verify test files exist
-        run: ls -R backend/classification/
-
-
       - name: Set PYTHONPATH and run tests
         run: |
           export PYTHONPATH=${GITHUB_WORKSPACE}/backend
@@ -63,10 +59,6 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r backend/class_api/requirements.txt
-          pip install --force-reinstall werkzeug==2.3.7
-          
-      - name: Verify test files exist
-        run: ls -R backend/class_api/
 
       - name: Set PYTHONPATH and run tests
         run: |
