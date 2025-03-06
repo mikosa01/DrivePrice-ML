@@ -14,9 +14,11 @@ COPY class_api/requirements.txt /app/class_api/requirements.txt
 RUN pip install --upgrade pip \
     && pip install --no-cache-dir -r /app/class_api/requirements.txt
 
-# Expose the application port
-EXPOSE $PORT
+ENV PORT=5000
 
-CMD ["gunicorn", "--bind", "0.0.0.0:$PORT", "class_api.api.app:create_app()"]
+# Expose the port Flask will run on
+EXPOSE 5000
+
+CMD ["gunicorn", "--bind", "0.0.0.0:$PORT", "class_api.api.app:create_app"]
 
 
