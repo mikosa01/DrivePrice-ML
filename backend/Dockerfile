@@ -19,6 +19,6 @@ ENV PORT=5000
 # Expose the port Flask will run on
 EXPOSE 5000
 
-CMD ["gunicorn", "--bind", "0.0.0.0:$PORT", "class_api.api.app:create_app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "class_api.api.app:create_app"]
 
 
