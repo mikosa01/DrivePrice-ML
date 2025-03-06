@@ -2,7 +2,7 @@ from classification.class_model.config import config
 from classification.class_model.data_management.data_management import load_pipeline
 from classification.class_model.data_management import errors
 from classification.class_model.data_management.validation import validation_input
-from classification.class_model.pipeline import pipeline
+from classification.class_model.pipeline import pipeline 
 import pandas as pd 
 import numpy as np
 import typing as t 
