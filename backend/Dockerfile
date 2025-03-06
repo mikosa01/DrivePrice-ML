@@ -14,11 +14,6 @@ COPY class_api/requirements.txt /app/class_api/requirements.txt
 RUN pip install --upgrade pip \
     && pip install --no-cache-dir -r /app/class_api/requirements.txt
 
-# Set environment variable for the port (this is needed if you're using dynamic ports)
-ENV PORT=8000
-
 # Expose the application port
 EXPOSE $PORT
 
-# Run the application with Gunicorn (preferred for production over Flask's built-in server)
-CMD ["gunicorn", "--bind", "0.0.0.0:$PORT", "class_api.api.app:create_app"]
