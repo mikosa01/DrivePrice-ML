@@ -37,7 +37,7 @@ jobs:
         run: |
           export PYTHONPATH=${GITHUB_WORKSPACE}/backend
           pytest backend/classification/test/
-        working-directory: backend/classification
+        working-directory: backend/classification/
 
   tests_and_flask_backend:  # Fixed the job name to be valid
     runs-on: ubuntu-latest
@@ -63,7 +63,7 @@ jobs:
         run: |
           export PYTHONPATH=${GITHUB_WORKSPACE}/backend
           pytest backend/class_api/tests/
-        working-directory: backend/class_api
+        working-directory: backend/class_api/
 
 
 
