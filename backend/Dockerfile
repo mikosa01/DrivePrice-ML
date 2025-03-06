@@ -17,5 +17,6 @@ RUN pip install --upgrade pip \
 # Expose the application port
 EXPOSE $PORT
 
+CMD gunicorn --bind 0.0.0.0:$PORT class_api.api.app:create_app()
 
 
