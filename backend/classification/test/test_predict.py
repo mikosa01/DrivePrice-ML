@@ -10,26 +10,25 @@ from classification.class_model.data_management.data_management import load_data
 from classification.class_model.predict import make_prediction
 
 def test_single_prediction():
-    X_train = pd.DataFrame(
-)
-    input_data = pd.DataFrame({
-    'Brand': ['Volkswagen', 'Volkswagen', 'Volkswagen', 'Volkswagen'],
-    'Model': ['Tiguan', 'Tiguan', 'Passat', 'Golf'],
-    'Year': [2001, 2005, 2010, 2015],
-    'Engine_Size': [2.1, 2.0, 2.2, 1.8],
-    'Fuel_Type': ['Diesel', 'Diesel', 'Petrol', 'Diesel'],
-    'Transmission': ['Manual', 'Automatic', 'Manual', 'Semi-Automatic'],
-    'Mileage': [157882, 120000, 98000, 75000],
-    'Doors': [3, 5, 4, 3],
-    'Owner_Count': [3, 2, 1, 2]
-})
+
+    input_data = {
+    'Brand': 'Volkswagen',
+    'Model': 'Tiguan', 
+    'Year': 2001,
+    'Engine_Size': 2.1,
+    'Fuel_Type': 'Diesel',
+    'Transmission': 'Automatic', 
+    'Mileage': 157882,
+    'Doors': 4,
+    'Owner_Count': 3
+}
 
     # test_data = input_data.drop(config.TARGET_COLUMNS, axis =1)
     my_pred = make_prediction(input_data=input_data)
 
     assert my_pred is not None
     assert isinstance(my_pred.get('prediction')[0], float)
-    # assert math.ceil(my_pred.get('prediction')[0]) == 8457 
+    assert math.ceil(my_pred.get('prediction')[0]) == 5011
 
 
 def test_age_calculator(): 
@@ -62,24 +61,22 @@ def test_pipeline_fit_predict():
     assert len(y_pred) == len(y_train)
 
 def test_pipeline_speed():
-    X_train = pd.DataFrame({
-    'Brand': ['Volkswagen', 'Volkswagen', 'Volkswagen', 'Volkswagen'],
-    'Model': ['Tiguan', 'Tiguan', 'Passat', 'Golf'],
-    'Year': [2001, 2005, 2010, 2015],
-    'Engine_Size': [2.1, 2.0, 2.2, 1.8],
-    'Fuel_Type': ['Diesel', 'Diesel', 'Petrol', 'Diesel'],
-    'Transmission': ['Manual', 'Automatic', 'Manual', 'Automatic'],
-    'Mileage': [157882, 120000, 98000, 75000],
-    'Doors': [3, 5, 4, 3],
-    'Owner_Count': [3, 2, 1, 2]
+    X_train = {
+    'Brand': 'Volkswagen', 
+    'Model': 'Tiguan',
+    'Year':  2015,
+    'Engine_Size': 2.2,
+    'Fuel_Type':  'Diesel',
+    'Transmission': 'Automatic',
+    'Mileage': 157882, 
+    'Doors': 3, 
+    'Owner_Count': 1
 }
-)
-    y_train = pd.Series([3342, 4500, 6800, 9000])
     start_time = time.time()
     make_prediction(input_data=X_train)
     end_time = time.time()
     
-    assert end_time - start_time < 5  # Ensure training completes in under 5 seconds
+    assert end_time - start_time < 5 
 
 
 
