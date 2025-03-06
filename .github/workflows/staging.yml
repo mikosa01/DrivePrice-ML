@@ -42,7 +42,6 @@ jobs:
         run: |
           export PYTHONPATH=${GITHUB_WORKSPACE}/backend
           pytest backend/classification/test/
-        
 
   tests_and_flask_backend:  # Fixed the job name to be valid
     runs-on: ubuntu-latest
