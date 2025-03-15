@@ -65,7 +65,7 @@ jobs:
           export PYTHONPATH=${GITHUB_WORKSPACE}/backend
           pytest 
         working-directory: backend/class_api/
-  
+        
   Push_to_production_branch:
     needs: [tests_and_model_training, tests_and_flask_backend]
     runs-on: ubuntu-latest
