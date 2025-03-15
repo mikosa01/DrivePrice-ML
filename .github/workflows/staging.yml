@@ -70,23 +70,27 @@ jobs:
     needs: [tests_and_model_training, tests_and_flask_backend]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - name: Setup git user
-        run: |
-          git config --global user.name "$(git --no-pager log --format=format:'%an' -n 1)"
-          git config --global user.email "$(git --no-pager log --format=format:'%ae' -n 1)"
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Merge Staging to Production and Push
+      - name: Set up Git
+        uses: actions/setup-git@v1  # Use stable version v1 of the setup-git action
+
+      - name: Fetch all branches
         run: |
-          git fetch origin
+          git fetch --all
+
+      - name: Checkout production branch
+        run: |
           git checkout production
-          git pull origin production  
-          git merge staging  # Merge `staging` into `production`
-          git push origin production 
+          git pull origin production
+
+      - name: Merge Staging into Production
+        run: |
+          git merge origin/staging --no-ff -m "Merging changes from staging to production"
+
+      - name: Push changes to production
+        run: |
+          git push origin production
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-
-
-
-
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
