@@ -81,21 +81,14 @@ jobs:
         git config --global user.name "GitHub Actions"
         git config --global user.email "actions@github.com"
 
-    - name: Fetch all branches
+    - name: Merge Staging to Production and Push
       run: |
-          git fetch --all
-
-    - name: Checkout production branch
-      run: |
+          # Ensure that the local staging and production branches are up-to-date
+          git fetch origin
           git checkout production
-          git pull origin production
-
-    - name: Merge Staging into Production
-      run: |
-          git merge origin/staging --no-ff -m "Merging changes from staging to production"
-
-    - name: Push changes to production
-      run: |
-          git push origin production
+          git pull origin production  # Ensure local production is up to date
+          git merge staging  # Merge `staging` into `production`
+          git push origin production  # Push changes to `production`
+        
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
