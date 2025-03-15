@@ -65,32 +65,3 @@ jobs:
           export PYTHONPATH=${GITHUB_WORKSPACE}/backend
           pytest 
         working-directory: backend/class_api/
-        
-  Push_to_production_branch:
-    needs: [tests_and_model_training, tests_and_flask_backend]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up Git
-        uses: actions/setup-git@v1  # Use stable version v1 of the setup-git action
-
-      - name: Fetch all branches
-        run: |
-          git fetch --all
-
-      - name: Checkout production branch
-        run: |
-          git checkout production
-          git pull origin production
-
-      - name: Merge Staging into Production
-        run: |
-          git merge origin/staging --no-ff -m "Merging changes from staging to production"
-
-      - name: Push changes to production
-        run: |
-          git push origin production
-        env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
