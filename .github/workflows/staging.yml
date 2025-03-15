@@ -74,10 +74,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Git
-        uses: actions/setup-git@v4
+      - uses: fregante/setup-git-token@v1
         with:
-          git_user_name: "GitHub Actions"
-          git_user_email: "actions@github.com"
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Merge Staging to Production and Push
         run: |
