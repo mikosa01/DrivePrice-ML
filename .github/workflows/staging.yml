@@ -65,8 +65,4 @@ jobs:
           export PYTHONPATH=${GITHUB_WORKSPACE}/backend
           pytest 
         working-directory: backend/class_api/
-
-
-
-
-
+      
