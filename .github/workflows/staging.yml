@@ -7,6 +7,10 @@ on:
     branches: [ "staging" ]
   workflow_dispatch:
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   tests_and_model_training:
     runs-on: ubuntu-latest
