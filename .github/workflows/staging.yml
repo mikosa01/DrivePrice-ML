@@ -66,14 +66,10 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-      # Step 3: List running web apps (optional)
-      - name: List Running Web Apps
-        run: |
-          az webapp list --query "[?state=='Running']"
 
       # Step 4: Log in to Azure Container Registry (ACR)
       - name: Log in to Azure Container Registry
-        run: az acr login --name ${{ secrets.ACR_NAME }}
+        run: cho "${{ secrets.ACR_PASSWORD }}" | docker login driveml.azurecr.io -u ${{ secrets.ACR_USERNAME }} --password-stdin
 
       # Step 5: Build and tag Docker image
       - name: Build Docker Image
@@ -85,39 +81,39 @@ jobs:
       - name: Push Docker Image to ACR
         run: docker push ${{ secrets.ACR_NAME }}.azurecr.io/${{ secrets.IMAGE_NAME }}:latest
 
-      # Step 7: Deploy the container to Azure Web App
-      - name: Deploy to Azure Web App
-        run: |
-          az webapp config container set --name ${{ secrets.AZURE_WEBAPP_NAME }} \
-            --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
-            --docker-custom-image-name ${{ secrets.ACR_NAME }}.azurecr.io/${{ secrets.IMAGE_NAME }}:latest \
-            --docker-registry-server-url https://${{ secrets.ACR_NAME }}.azurecr.io \
-            --docker-registry-server-user ${{ secrets.ACR_USERNAME }} \
-            --docker-registry-server-password ${{ secrets.ACR_PASSWORD }}
-
-      # Step 8: Restart Web App to apply changes
-      - name: Restart Azure Web App
-        run: az webapp restart --name ${{ secrets.AZURE_WEBAPP_NAME }} --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }}
-
-
-
-  # Push_to_production_branch:
-  #   needs: [tests_and_model_training, tests_and_flask_backend]
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v4
-
-  #     - name: Configure Git
+  #     # Step 7: Deploy the container to Azure Web App
+  #     - name: Deploy to Azure Web App
   #       run: |
-  #         git config --global user.name "GitHub Actions"
-  #         git config --global user.email "actions@github.com"
+  #         az webapp config container set --name ${{ secrets.AZURE_WEBAPP_NAME }} \
+  #           --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
+  #           --docker-custom-image-name ${{ secrets.ACR_NAME }}.azurecr.io/${{ secrets.IMAGE_NAME }}:latest \
+  #           --docker-registry-server-url https://${{ secrets.ACR_NAME }}.azurecr.io \
+  #           --docker-registry-server-user ${{ secrets.ACR_USERNAME }} \
+  #           --docker-registry-server-password ${{ secrets.ACR_PASSWORD }}
 
-  #     - name: Merge Staging to Production
-  #       run: |
-  #         git checkout production
-  #         git pull origin production  
-  #         git merge staging
-  #         git push origin production
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #     # Step 8: Restart Web App to apply changes
+  #     - name: Restart Azure Web App
+  #       run: az webapp restart --name ${{ secrets.AZURE_WEBAPP_NAME }} --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }}
+
+
+
+  # # Push_to_production_branch:
+  # #   needs: [tests_and_model_training, tests_and_flask_backend]
+  # #   runs-on: ubuntu-latest
+  # #   steps:
+  # #     - name: Checkout code
+  # #       uses: actions/checkout@v4
+
+  # #     - name: Configure Git
+  # #       run: |
+  # #         git config --global user.name "GitHub Actions"
+  # #         git config --global user.email "actions@github.com"
+
+  # #     - name: Merge Staging to Production
+  # #       run: |
+  # #         git checkout production
+  # #         git pull origin production  
+  # #         git merge staging
+  # #         git push origin production
+  # #       env:
+  # #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
