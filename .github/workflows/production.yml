@@ -7,8 +7,6 @@ on:
   # Triggers the workflow on push or pull request events but only for the "develop" branch
   push:
     branches: [ "production" ]
-  pull_request:
-    branches: [ "production" ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -27,7 +25,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
-       # Step 2: Install the Heroku CLI
+       # Step 2: Install the Azure CLI
       - name: Azure Login 
         run: azure/login@v2
         with: 
@@ -35,7 +33,7 @@ jobs:
             tenant-id: ${{ secrets.AZURE_TENANT_ID }}
             subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      # Step 3: Log in to Heroku Docker Registry
+      # Step 3: Log in to Azure Docker Registry
       - name: Log in to Azure Container Registry
         run: 
             az acr login --name ${{ secrets.ACR_NAME }}
@@ -44,7 +42,7 @@ jobs:
       - name: Build and Push Docker Image to Azure
         run: |
           docker build -t ${{ secrets.ACR_NAME }}.azurecr.io/${{ secrets.IMAGE_NAME }}:latest ./backend
-          docker tag ${{ secrets.ACR_NAME }}.azurecr.io/${{ secrets.IMAGE_NAME }}:latest ${{ secrets.ACR_NAME }}.azurecr.io/${{ secrets.IMAGE_NAME }}:latest
+          docker tag ${{ secrets.ACR_NAME }}.azurecr.io/${{ secrets.IMAGE_NAME }}:v1
 
       # Step 5: Release the Docker Container
       - name: Push Docker image to ACR
