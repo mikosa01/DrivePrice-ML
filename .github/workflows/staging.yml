@@ -53,8 +53,8 @@ jobs:
   
   Deploy-Backend:
     # The type of runner that the job will run on
-    needs: [tests_and_model_training, tests_and_flask_backend]
     runs-on: ubuntu-latest
+    needs: [tests_and_model_training, tests_and_flask_backend]
     env:
       FLASK_ENV: production
 
