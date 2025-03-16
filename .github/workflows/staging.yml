@@ -50,6 +50,41 @@ jobs:
           export PYTHONPATH=${GITHUB_WORKSPACE}/backend
           pytest 
         working-directory: backend/class_api/
+  
+  Deploy-Backend:
+    # The type of runner that the job will run on
+    needs: [tests_and_model_training, tests_and_flask_backend]
+    runs-on: ubuntu-latest
+    env:
+      FLASK_ENV: production
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+       # Step 2: Install the Azure CLI
+      - name: Azure Login 
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+      - run: |
+          az webapp list --query "[?state=='Running']"
+
+      # Step 3: Log in to Azure Docker Registry
+      - name: Log in to Azure Container Registry
+        run: 
+            az acr login --name ${{ secrets.ACR_NAME }}
+
+      # Step 4: Build and Push the Docker Image
+      - name: Build and Push Docker Image to Azure
+        run: |
+          docker build -t ${{ secrets.ACR_NAME }}.azurecr.io/${{ secrets.IMAGE_NAME }}:latest ./backend
+          docker tag ${{ secrets.ACR_NAME }}.azurecr.io/${{ secrets.IMAGE_NAME }}:latest
+
+      # Step 5: Release the Docker Container
+      - name: Push Docker image to ACR
+        run: |
+          docker push ${{ secrets.ACR_NAME }}.azurecr.io/${{ secrets.IMAGE_NAME }}:latest
+
 
   # Push_to_production_branch:
   #   needs: [tests_and_model_training, tests_and_flask_backend]
