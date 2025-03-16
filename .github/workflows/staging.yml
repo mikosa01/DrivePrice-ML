@@ -56,7 +56,6 @@ jobs:
     needs: [tests_and_model_training, tests_and_flask_backend]
     env:
       FLASK_ENV: production
-
     steps:
       # Step 1: Checkout code
       - name: Checkout Repository
