@@ -67,7 +67,6 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-
       # Step 3: List running web apps (optional)
       - name: List Running Web Apps
         run: |
