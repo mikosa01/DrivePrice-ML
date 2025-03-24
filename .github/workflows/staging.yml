@@ -70,10 +70,14 @@ jobs:
       - name: Log in to Azure Container Registry in Docker    
         run: docker login -u ${{ secrets.ACR_USERNAME }} -p ${{ secrets.ACR_PASSWORD }} ${{ secrets.ACR_LOGIN_SERVER }}
 
-
+      # Step 4: Log in to Azure Container Registry (ACR)
+      # - name: Log in to Azure Container Registry
+      #   run: echo "${{ secrets.ACR_PASSWORD }}" | docker login ${{ secrets.ACR_LOGIN_SERVER }} -u ${{ secrets.ACR_USERNAME }} --password-stdin
+      
       # Step 4: Log in to Azure Container Registry (ACR)
       - name: Log in to Azure Container Registry
-        run: echo "${{ secrets.ACR_PASSWORD }}" | docker login ${{ secrets.ACR_LOGIN_SERVER }} -u ${{ secrets.ACR_USERNAME }} --password-stdin
+        run: |
+           az acr login --name ${{ secrets.ACR_USERNAME }}
 
       # Step 5: Build and tag Docker image
       - name: Build Docker Image
@@ -84,7 +88,7 @@ jobs:
       # Step 6: Push Docker image to Azure Container Registry
       - name: Push Docker Image to ACR
         run: docker push ${{ secrets.ACR_NAME }}.azurecr.io/${{ secrets.IMAGE_NAME }}:latest
-        
+
 
   #     # Step 7: Deploy the container to Azure Web App
   #     - name: Deploy to Azure Web App
