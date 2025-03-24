@@ -109,10 +109,10 @@ jobs:
         run: |
           az webapp config container set --name ${{ secrets.AZURE_WEBAPP_NAME }} \
             --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
-            --docker-custom-image-name ${{ secrets.ACR_LOGIN_SERVER }}/my-app:latest \
-            --docker-registry-server-url https://${{ secrets.ACR_LOGIN_SERVER }} \
-            --docker-registry-server-user ${{ secrets.ACR_USERNAME }} \
-            --docker-registry-server-password ${{ secrets.ACR_PASSWORD }}
+            --container-image-name ${{ secrets.ACR_LOGIN_SERVER }}/my-app:latest \
+            --container-registry-server-url https://${{ secrets.ACR_LOGIN_SERVER }} \
+            --container-registry-server-user ${{ secrets.ACR_USERNAME }} \
+            --container-registry-server-password ${{ secrets.ACR_PASSWORD }}
 
       # Step 8: Restart Web App to apply changes
       - name: Restart Azure Web App
