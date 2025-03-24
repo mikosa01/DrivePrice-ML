@@ -101,7 +101,7 @@ jobs:
 
       # Step 6: Push Docker image to Azure Container Registry
       - name: Push Docker Image to ACR
-        run: docker push ${{ secrets.ACR_LOGIN_SERVER }}/${{ secrets.IMAGE_NAME }}:latest
+        run: docker push ${{ secrets.ACR_LOGIN_SERVER }}/my-app:latest
 
 
   #     # Step 7: Deploy the container to Azure Web App
