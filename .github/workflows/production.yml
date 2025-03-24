@@ -37,7 +37,7 @@ jobs:
       - name: Build and Push Docker Image to Azure
         run: |
           docker build -t ${{ secrets.ACR_NAME }}.azurecr.io/${{ secrets.IMAGE_NAME }}:latest ./backend
-          docker tag ${{ secrets.ACR_NAME }}.azurecr.io/${{ secrets.IMAGE_NAME }}:v1
+          docker tag ${{ secrets.ACR_NAME }}.azurecr.io/${{ secrets.IMAGE_NAME }}:latest
 
       # Step 5: Release the Docker Container
       - name: Push Docker image to ACR
