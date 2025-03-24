@@ -112,7 +112,7 @@ jobs:
             --container-image-name ${{ secrets.ACR_LOGIN_SERVER }}/my-app:latest \
             --container-registry-server-url https://${{ secrets.ACR_LOGIN_SERVER }} \
             --container-registry-server-user ${{ secrets.ACR_USERNAME }} \
-            --container-registry-server-password ${{ secrets.ACR_PASSWORD }}
+            --docker-registry-server-password ${{ secrets.ACR_PASSWORD }}
 
       # Step 8: Restart Web App to apply changes
       - name: Restart Azure Web App
