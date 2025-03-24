@@ -4,21 +4,21 @@ FROM python:3.10
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy only requirements.txt first to leverage Docker caching
+# Copy the entire backend folder into the container
+COPY . /app
+
+# Copy only requirements.txt first to leverage Docker caching for faster builds
 COPY class_api/requirements.txt /app/class_api/requirements.txt
 
 # Install Python dependencies
 RUN pip install --upgrade pip \
     && pip install --no-cache-dir -r /app/class_api/requirements.txt
 
-# Copy the entire backend folder into the container
-COPY . /app
-
-# Set environment variables
 ENV PORT=5000
 
 # Expose the port Flask will run on
 EXPOSE 5000
 
-# Run Gunicorn with the correct app instance
 CMD ["gunicorn", "--bind", "0.0.0.0:5000", "class_api.api.app:create_app()"]
+
+
