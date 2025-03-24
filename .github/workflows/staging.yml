@@ -104,19 +104,19 @@ jobs:
         run: docker push ${{ secrets.ACR_LOGIN_SERVER }}/my-app:latest
 
 
-  #     # Step 7: Deploy the container to Azure Web App
-  #     - name: Deploy to Azure Web App
-  #       run: |
-  #         az webapp config container set --name ${{ secrets.AZURE_WEBAPP_NAME }} \
-  #           --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
-  #           --docker-custom-image-name ${{ secrets.ACR_NAME }}.azurecr.io/${{ secrets.IMAGE_NAME }}:latest \
-  #           --docker-registry-server-url https://${{ secrets.ACR_NAME }}.azurecr.io \
-  #           --docker-registry-server-user ${{ secrets.ACR_USERNAME }} \
-  #           --docker-registry-server-password ${{ secrets.ACR_PASSWORD }}
+      # Step 7: Deploy the container to Azure Web App
+      - name: Deploy to Azure Web App
+        run: |
+          az webapp config container set --name ${{ secrets.AZURE_WEBAPP_NAME }} \
+            --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
+            --docker-custom-image-name ${{ secrets.ACR_LOGIN_SERVER }}/my-app:latest \
+            --docker-registry-server-url https://${{ secrets.ACR_LOGIN_SERVER }} \
+            --docker-registry-server-user ${{ secrets.ACR_USERNAME }} \
+            --docker-registry-server-password ${{ secrets.ACR_PASSWORD }}
 
-  #     # Step 8: Restart Web App to apply changes
-  #     - name: Restart Azure Web App
-  #       run: az webapp restart --name ${{ secrets.AZURE_WEBAPP_NAME }} --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }}
+      # Step 8: Restart Web App to apply changes
+      - name: Restart Azure Web App
+        run: az webapp restart --name ${{ secrets.AZURE_WEBAPP_NAME }} --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }}
 
   # # Push_to_production_branch:
   # #   needs: [tests_and_model_training, tests_and_flask_backend]
