@@ -99,8 +99,6 @@ jobs:
   #     - name: Restart Azure Web App
   #       run: az webapp restart --name ${{ secrets.AZURE_WEBAPP_NAME }} --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }}
 
-
-
   # # Push_to_production_branch:
   # #   needs: [tests_and_model_training, tests_and_flask_backend]
   # #   runs-on: ubuntu-latest
